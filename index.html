@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+</head>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .btn {
+        background-color: rgb(0, 255, 255);
+        border: 2px solid rgb(201, 201, 201);
+        color: rgb(170, 104, 159);
+    }
+    
+    .table {
+        border: 3px solid rgb(0, 255, 255);
+        border-radius: 10px;
+        max-width: 100%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .p1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .lab {
+        color: rgb(0, 255, 255);
+        background-color: aliceblue;
+    }
+</style>
+
+<body>
+
+    <div class="p1">
+        <table style="border:3px solid rgb(0, 255, 255)" class="table">
+            <tr>
+                <td colspan="2">
+                    <label for="searchpoke" id="lab">search a pokemon:</label>
+                    <input type="text" name="searchbox" id="searchinput" autocomplete="off">
+                    <button class="btn" onclick="searchpokemon()">search</button>
+                    <button class="btn" onclick="randompokemon()">random</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><img id="picture" class="img-fluid" src="">
+                    <td>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    name:
+                                </td>
+                                <td id="name">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>hp:</td>
+                                <td id="hp"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    attack:
+                                </td>
+                                <td id="attack">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    defence:
+                                </td>
+                                <td id="defence">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    special attack:
+                                </td>
+                                <td id="spattack">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+            </tr>
+
+        </table><br>
+
+    </div>
+    </div>
+</body>
+<script>
+    function randompokemon() {
+        let random = Math.ceil(Math.floor(Math.random() * 898));
+        fetch(`http://localhost/${random}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('attack').innerText = data['attack'];
+                document.getElementById('defence').innerText = data['defence'];
+                document.getElementById('hp').innerText = data['hp'];
+                document.getElementById('name').innerText = data['name'];
+                document.getElementById('picture').alt = data['name'];
+                document.getElementById('spattack').innerText = data['special_attack'];
+                document.getElementById('picture').src = data['pic'];
+            })
+    };
+
+    function searchpokemon() {
+        let search = document.getElementById('searchinput').value;
+        if (search != '') {
+            fetch(`http://localhost/${search}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('attack').innerText = data['attack'];
+                    document.getElementById('defence').innerText = data['defence'];
+                    document.getElementById('hp').innerText = data['hp'];
+                    document.getElementById('name').innerText = data['name'];
+                    document.getElementById('picture').alt = data['name'];
+                    document.getElementById('spattack').innerText = data['special_attack'];
+                    document.getElementById('picture').src = data['pic'];
+                })
+        } else {
+            alert('please enter a pokemon name');
+        }
+    };
+    randompokemon();
+</script>
+
+</html>
+
+</html>
